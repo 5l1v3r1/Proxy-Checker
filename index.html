@@ -1,0 +1,41 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Proxy Checker</title>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js'></script>
+</head>
+<script>
+    $(function () {
+        var socket = io()
+        $("#form").on("submit", function () {
+            event.preventDefault()
+            socket.emit('timeout', $('#timeout').val())
+            socket.emit('check', $('#list').val())
+        })
+        socket.on('work', function (message) {
+            document.getElementById("work").value += `${message}\r\n`
+        })
+        // socket.on('finish', function (message) 
+        // {
+        //     window.alert(message)
+        // })
+    })
+</script>
+
+<body>
+    <center>
+        <form id="form" method="">
+            <h1>Proxy Checker</h1>
+            <textarea id="list" placeholder="ur list"></textarea><br><br>
+            <label for="timeout">Timeout(Seconds)</label>
+            <input id="timeout" name="timeout" type="text" value="3"><br><br>
+            <button type="submit">Start</button><br><br>
+            <textarea id="work" placeholder="lives"></textarea>
+        </form>
+    </center>
+
+</body>
+
+</html>
